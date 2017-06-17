@@ -13,5 +13,5 @@ Now, features are as follows.
 - UCAS push
   collect news and wechat-push involving UCAS & CAS
   
-<img src="http://www.wakafa.cn/resource/web.png" width="681" height="356" align=center />
+:![](app/src/web.jpg)
  
