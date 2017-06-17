@@ -1,0 +1,39 @@
+<resources>
+
+    <string name="app_name">Schelper</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="welcome_text">本科教育网最新通知</string>
+
+    <string name="intro">来自果壳Schelper团队</string>
+    <string name="first_use">欢迎第一次使用！下拉可刷新 -_-</string>
+    <string name="anticipate">本功能尽请期待</string>
+    <string name="pref_title_social_recommendations">开启定时更新</string>
+    <string name="pref_description_social_recommendations">系统将在后台实时更新最新通知</string>
+
+    <string name="net_unstable">网络状态不稳定\n\n请下拉再次刷新</string>
+    <string name="net_disconnect">请检查网络连接！\n\n下拉进行刷新</string>
+    <string name="loading">加载中......</string>
+
+    <string name="pref_title_display_name">选择接收端口</string>
+    <string name="pref_default_display_port">此为开发者选项，请不要轻易改动</string>
+    <string name="pref_default_display_name">1020</string>
+
+
+    <string name="action_leave">离开</string>
+    <string name="action_send">发送</string>
+    <string name="prompt_message">请输入信息</string>
+    <string name="connect">已连接</string>
+    <string name="disconnect">已断开连接, 请检查你的网络</string>
+    <string name="error_connect">连接失败</string>
+
+    <!-- messages -->
+    <string name="message_welcome">欢迎来到果壳聊天室</string>
+    <plurals name="message_participants">
+        <item quantity="one">现在聊天室有 %d 人</item>
+        <item quantity="other">现在聊天室有 %d 人</item>
+    </plurals>
+    <string name="message_user_joined">%s 加入</string>
+    <string name="message_user_left">%s 离开</string>
+    <string name="user_action_typing">正在打字</string>
+
+</resources>
