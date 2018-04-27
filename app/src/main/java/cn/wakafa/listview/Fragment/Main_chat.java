@@ -257,6 +257,7 @@ public class Main_chat extends Fragment {
 
         mTyping = false;
 
+//      !!! Notice: transfer-data is Unicode, so transmission is necessary !!!
         String message = mInputMessageView.getText().toString().trim();
         String message2 = string2Unicode(message);
 

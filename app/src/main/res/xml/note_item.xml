@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/fruit_image"
+        android:id="@+id/note_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="3dp"
         android:layout_marginBottom="3dp"/>
 
     <TextView
-        android:id="@+id/fruit_name"
+        android:id="@+id/note_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"

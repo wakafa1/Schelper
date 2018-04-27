@@ -1,4 +1,4 @@
-package com.tamic.widget.sample;
+package cn.wakafa.listview.Others;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -15,11 +15,10 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.wakafa.listview.R;
+
 import static android.content.ContentValues.TAG;
 
-/**
- * Created by LIUYONGKUI726 on 2017-07-10.
- */
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory {
@@ -31,6 +30,7 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
     ArrayList<String> urlString = new ArrayList<String>();
 
     private int initLists() {
+        mList.clear();
         try {
             socket = new Socket();
 //            getPredata();
@@ -103,11 +103,7 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
     public void onCreate() {
         // 需要显示的数据
         mList.add("");
-//        for (int i = 0; i < 5; i++) {
-//            mList.add("item"+ i);
-//        }
         initLists();
-        //mList = noteList;
     }
 
     /*

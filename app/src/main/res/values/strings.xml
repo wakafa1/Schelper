@@ -35,5 +35,7 @@
     <string name="message_user_joined">%s 加入</string>
     <string name="message_user_left">%s 离开</string>
     <string name="user_action_typing">正在打字</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

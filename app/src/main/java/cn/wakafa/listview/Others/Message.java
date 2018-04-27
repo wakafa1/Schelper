@@ -1,7 +1,12 @@
 package cn.wakafa.listview.Others;
 
+/**
+ * A class to implement messages in chatting
+ */
+
 public class Message {
 
+//    Here final means No Change any more
     public static final int TYPE_MESSAGE = 0;
     public static final int TYPE_LOG = 1;
     public static final int TYPE_ACTION = 2;
@@ -14,15 +19,15 @@ public class Message {
 
     public int getType() {
         return mType;
-    };
+    }
 
     public String getMessage() {
         return mMessage;
-    };
+    }
 
     public String getUsername() {
         return mUsername;
-    };
+    }
 
 
     public static class Builder {

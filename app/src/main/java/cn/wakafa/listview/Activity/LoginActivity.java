@@ -25,6 +25,7 @@ import io.socket.emitter.Emitter;
 /**
  * A login screen that offers login via username.
  */
+
 public class LoginActivity extends Activity {
 
     private EditText mUsernameView;

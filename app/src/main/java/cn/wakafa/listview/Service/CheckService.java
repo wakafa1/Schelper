@@ -38,7 +38,9 @@ public class CheckService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("myservice","started");
-        //shownotes(1, "hello", "你开启了服务");
+        shownotes(1, "hello", "你开启了服务");
         return super.onStartCommand(intent, flags, startId);
     }
+
+
 }

@@ -1,7 +1,7 @@
 package cn.wakafa.listview.Others;
 
 /**
- * Created by wakaf on 2017/5/21.
+ * Created by wakafa on 2017/5/21.
  */
 
 import android.content.Context;
@@ -29,27 +29,27 @@ public class NoteAdapter extends ArrayAdapter<Note> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Note fruit = getItem(position); // 获取当前项的Fruit实例
+        Note note = getItem(position); // 获取当前项的 Note 实例
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
             view = LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.fruitImage = (ImageView) view.findViewById (R.id.fruit_image);
-            viewHolder.fruitName = (TextView) view.findViewById (R.id.fruit_name);
+            viewHolder.noteImage = (ImageView) view.findViewById (R.id.note_image);
+            viewHolder.noteName = (TextView) view.findViewById (R.id.note_name);
             view.setTag(viewHolder); // 将ViewHolder存储在View中
         } else {
             view = convertView;
             viewHolder = (ViewHolder) view.getTag(); // 重新获取ViewHolder
         }
-        viewHolder.fruitImage.setImageResource(fruit.getImageId());
-        viewHolder.fruitName.setText(fruit.getName());
+        viewHolder.noteImage.setImageResource(note.getImageId());
+        viewHolder.noteName.setText(note.getName());
         return view;
     }
 
     class ViewHolder {
-        ImageView fruitImage;
-        TextView fruitName;
+        ImageView noteImage;
+        TextView noteName;
     }
 
 }

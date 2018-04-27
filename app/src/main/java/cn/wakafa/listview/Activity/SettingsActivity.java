@@ -22,7 +22,9 @@ import cn.wakafa.listview.Fragment.SettingsFragment;
  * API Guide</a> for more information on developing a Settings UI.
  */
 
-
+/*
+ * !!! Implemented by fragment !!!
+ */
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -36,13 +38,13 @@ public class SettingsActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.title_activity_settings);
         actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);  // Add a left-top button to return
 
     }
-
+//    Listening return button
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-        case android.R.id.home:// 点击返回图标事件
+        case android.R.id.home: // 点击返回图标事件
             this.finish();
         default:
             return super.onOptionsItemSelected(item);

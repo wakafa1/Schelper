@@ -11,7 +11,7 @@ public class ChatApplication extends Application {
 
     private Socket mSocket;
     {
-        String URL = "http://www.wakafa.cn:3000";
+        String URL = "http://118.89.169.100:3000";
         try {
             mSocket = IO.socket(URL);
         } catch (URISyntaxException e) {

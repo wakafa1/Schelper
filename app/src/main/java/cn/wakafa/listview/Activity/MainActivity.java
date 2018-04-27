@@ -1,6 +1,7 @@
 package cn.wakafa.listview.Activity;
 
 import android.content.Intent;
+import android.os.PersistableBundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -20,14 +21,18 @@ import cn.wakafa.listview.Fragment.Main_notice;
 import cn.wakafa.listview.R;
 import cn.wakafa.listview.Service.CheckService;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private Main_chat chatFragment;
     private Main_notice noticeFragment;
 
+    public int mCustomVariable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        // Start multi-thread mode
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().penaltyLog().penaltyDeath().build());
 
@@ -38,9 +43,19 @@ public class MainActivity extends AppCompatActivity {
         changeFrag(noticeFragment,1);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        if (savedInstanceState != null) {
+            mCustomVariable = savedInstanceState.getInt("variable", 0);
+        }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+        super.onSaveInstanceState(outState, outPersistentState);
+        outState.putInt("variable", mCustomVariable);
+    }
 
+    // Config top menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -48,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    // Stop service
     @Override
     protected void onStop() {
         super.onStop();
@@ -55,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
         stopService(stopIntent);
     }
 
+    // Listening of menu bar button
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -72,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Listening of hardware button (back button)
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -102,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
     };
 
+    // First hide all the fragments, and then add the fragment needed & commit
     private void changeFrag(Fragment fragment, int index) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();

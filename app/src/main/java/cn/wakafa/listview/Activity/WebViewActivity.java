@@ -27,26 +27,34 @@ public class WebViewActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String data = "http://bkjy.ucas.ac.cn" + intent.getStringExtra("url");
 
-        webView = (WebView)findViewById(R.id.webviewer);
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
-        webView.getSettings().setLoadWithOverviewMode(true);
+//        Set some configuration
+        {
+            webView = (WebView) findViewById(R.id.webviewer);
+            webView.getSettings().setJavaScriptEnabled(true);
+            webView.getSettings().setSupportZoom(true);
+            webView.getSettings().setBuiltInZoomControls(true);
+            webView.getSettings().setUseWideViewPort(true);
+            webView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+            webView.getSettings().setLoadWithOverviewMode(true);
+        }
+
         webView.setWebViewClient(new WebViewClient() {
+
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
                 super.onPageStarted(view, url, favicon);
                 setTitle(R.string.loading);
             }
 
+//            Hide top bar
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 getSupportActionBar().hide();
             }
         });
+
+//        Config download
         webView.setDownloadListener(new DownloadListener() {
             @Override
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
@@ -55,6 +63,7 @@ public class WebViewActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         webView.loadUrl(data);
     }
 }

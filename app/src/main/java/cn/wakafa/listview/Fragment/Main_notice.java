@@ -47,11 +47,11 @@ public class Main_notice extends android.support.v4.app.Fragment {
     public static final int UPDATE_TEXT = 1;
     public int ret;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        // configure UI
+
+        // Configure UI
         view = inflater.inflate(R.layout.main_notes, container, false);
         textView = (TextView)view.findViewById(R.id.uptext);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.swipe_container);
@@ -70,7 +70,7 @@ public class Main_notice extends android.support.v4.app.Fragment {
         firstrefresh = 2;
         Log.d("hello2", String.valueOf(b));
 
-        // other works to be done
+        // Other works to be done
         getPredata();
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         try {
@@ -85,6 +85,7 @@ public class Main_notice extends android.support.v4.app.Fragment {
             textView.setVisibility(View.GONE);
         }
 
+        // Start service
         if (serviceOn) {
             Intent startIntent = new Intent(getActivity(), CheckService.class);
             getActivity().startService(startIntent);
@@ -99,16 +100,17 @@ public class Main_notice extends android.support.v4.app.Fragment {
         //ret = initLists();
         if (index == 1) {
             swipeRefreshLayout.setRefreshing(true);
-            new getonlinemsg().execute();
+            new getOnlineMsg().execute();
             Log.d("helloret", String.valueOf(ret));
             return ret;
         } else  {
-            new getonlinemsg().execute();
+            new getOnlineMsg().execute();
             Log.d("helloret", String.valueOf(ret));
             return ret;
         }
     }
 
+    // Collect data stored in Android perminently (by key)
     private void getPredata() {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
         try {
@@ -129,19 +131,20 @@ public class Main_notice extends android.support.v4.app.Fragment {
                 //Toast.makeText(MainActivity.this, fruit.getName(), Toast.LENGTH_SHORT).show();
                 int index = note.getIndex();
                 String data = urlString.get(index);
-                Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                Intent intent = new Intent(getActivity(), WebViewActivity.class); // Call WebView
                 intent.putExtra("url", data);
                 startActivity(intent);
             }
         });
     }
 
-    private class getonlinemsg extends AsyncTask<Integer, Integer, Integer> {
+    private class getOnlineMsg extends AsyncTask<Integer, Integer, Integer> {
         @Override
         protected Integer doInBackground(Integer... params) {
             return initLists();
         }
 
+        // Do the following code after the synctask
         @Override
         protected void onPostExecute(Integer integer) {
             ret = integer;
@@ -167,16 +170,16 @@ public class Main_notice extends android.support.v4.app.Fragment {
         try {
             socket = new Socket();
             getPredata();
-            InetSocketAddress address = new InetSocketAddress(seraddress,port);
+            InetSocketAddress address = new InetSocketAddress(seraddress, port);
             socket.connect(address);
             socket.setSoTimeout(3000);
         } catch (Exception e){
             try {
                 socket.close();
             } catch (Exception e2) {
-                Log.d("helloerr", e2.getMessage());
+//                Log.d("helloerr", e2.getMessage());
                 return 9;}
-            Log.d("helloerrout", e.getMessage());
+//            Log.d("helloerrout", e.getMessage());
             return 9;
         }
         try{
@@ -203,7 +206,7 @@ public class Main_notice extends android.support.v4.app.Fragment {
             }
             socket.close();
         } catch (Exception e){
-            Log.d("helloerrout22", e.getMessage());
+//            Log.d("helloerrout22", e.getMessage());
             if (e.getMessage().equals("Read timed out")) {
                 return 8;
             }

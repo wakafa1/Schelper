@@ -1,5 +1,9 @@
 package cn.wakafa.listview.Others;
 
+/**
+ * A class to implement notes from network
+ */
+
 public class Note{
     private String name;
     private int imageId;
@@ -10,7 +14,7 @@ public class Note{
         this.imageId = imageId;
     }
     public String getName() {
-        return  name;
+        return name;
     }
     public int getImageId() {
         return imageId;

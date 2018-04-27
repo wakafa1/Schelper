@@ -12,6 +12,8 @@ import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import cn.wakafa.listview.Service.WidgetViewsService;
+
 /**
  * Implementation of App Widget functionality.
  */
@@ -84,14 +86,6 @@ public class NoteWidgetProvider extends AppWidgetProvider {
             // 刷新Widget
             final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
             final ComponentName cn = new ComponentName(context, NoteWidgetProvider.class);
-
-//            WidgetViewsFactory.mList.add("音乐"+ i);
-//            initLists();
-//            WidgetViewsFactory.mList.clear();
-//            WidgetViewsFactory.mList = noteList;
-
-//            if (noteList.isEmpty())
-//                WidgetViewsFactory.mList.add("fuck");
 
             // 这句话会调用RemoteViewSerivce中RemoteViewsFactory的onDataSetChanged()方法，即更新列表。
             mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn),
