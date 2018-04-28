@@ -1,4 +1,4 @@
-package cn.wakafa.listview;
+package cn.wakafa.listview.Others;
 
 import android.annotation.TargetApi;
 import android.app.PendingIntent;
@@ -12,6 +12,8 @@ import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import cn.wakafa.listview.Activity.WebViewActivity;
+import cn.wakafa.listview.R;
 import cn.wakafa.listview.Service.WidgetViewsService;
 
 /**
@@ -21,7 +23,7 @@ import cn.wakafa.listview.Service.WidgetViewsService;
 @TargetApi(Build.VERSION_CODES.CUPCAKE)
 public class NoteWidgetProvider extends AppWidgetProvider {
 
-    String clickAction = "com.tamic.WidgetProvider.onclick";
+    String clickAction = "click";
     int i = 0;
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -33,7 +35,7 @@ public class NoteWidgetProvider extends AppWidgetProvider {
 
         // 创建一个RemoteView
         RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                R.layout.my_widget_layout);
+                R.layout.widget_layout);
 
         // 把这个Widget绑定到RemoteViewsService
         Intent intent = new Intent(context, WidgetViewsService.class);
@@ -46,17 +48,22 @@ public class NoteWidgetProvider extends AppWidgetProvider {
         remoteViews.setEmptyView(R.id.widget_list, R.layout.none_data);
 
         // 点击列表触发事件
-        Intent clickIntent = new Intent(context, NoteWidgetProvider.class);
+        /*Intent clickIntent = new Intent(context, NoteWidgetProvider.class);
 
         // 设置Action，方便在onReceive中区别点击事件
-        clickIntent.setAction(clickAction);
+        clickIntent.setAction("click");
         clickIntent.setData(Uri.parse(clickIntent.toUri(Intent.URI_INTENT_SCHEME)));
 
         PendingIntent pendingIntentTemplate = PendingIntent.getBroadcast(
                 context, 0, clickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         remoteViews.setPendingIntentTemplate(R.id.widget_list,
-                pendingIntentTemplate);
+                pendingIntentTemplate);*/
+
+        Intent fullIntent = new Intent(context, WebViewActivity.class);
+        PendingIntent pfullintent = PendingIntent.getActivity(context, 0, fullIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setPendingIntentTemplate(R.id.widget_list, pfullintent);
+
 
         // 刷新按钮
         final Intent refreshIntent = new Intent(context,
@@ -74,7 +81,7 @@ public class NoteWidgetProvider extends AppWidgetProvider {
 
 
     /**
-     * 接收Intent
+     * 接收来自WidgetViewsFactory的Intent
      */
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -82,21 +89,27 @@ public class NoteWidgetProvider extends AppWidgetProvider {
 
         String action = intent.getAction();
 
-        if (action.equals("refresh")) {
-            // 刷新Widget
-            final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
-            final ComponentName cn = new ComponentName(context, NoteWidgetProvider.class);
+        switch (action) {
+            case "refresh":
+                // 刷新Widget
+                final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+                final ComponentName cn = new ComponentName(context, NoteWidgetProvider.class);
 
-            // 这句话会调用RemoteViewSerivce中RemoteViewsFactory的onDataSetChanged()方法，即更新列表。
-            mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn),
-                    R.id.widget_list);
+                // 这句话会调用RemoteViewSerivce中RemoteViewsFactory的onDataSetChanged()方法，即更新列表。
+                mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn),
+                        R.id.widget_list);
+                break;
 
-        } else if (action.equals(clickAction)) {
-            // 单击Wdiget中ListView的某一项会显示一个Toast提示。
-            Toast.makeText(context, intent.getStringExtra("content"),
-                    Toast.LENGTH_SHORT).show();
+            case "click":
+                // 单击Wdiget中ListView的某一项会显示一个Toast提示。
+                Toast.makeText(context, intent.getStringExtra("url"),
+                        Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                break;
         }
         i++;
     }
 
 }
+

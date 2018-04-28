@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -16,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.wakafa.listview.R;
-
-import static android.content.ContentValues.TAG;
 
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -33,18 +30,14 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
         mList.clear();
         try {
             socket = new Socket();
-//            getPredata();
             InetSocketAddress address = new InetSocketAddress(seraddress,port);
             socket.connect(address);
             socket.setSoTimeout(3000);
-//            Log.d("hellook", "okok");
         } catch (Exception e){
             try {
                 socket.close();
             } catch (Exception e2) {
-//                Log.d("helloerr", e2.getMessage());
                 return 9;}
-//            Log.d("helloerrout", e.getMessage());
             return 9;
         }
         try{
@@ -63,7 +56,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
                     if (item.charAt(0) == '/') {
                         urlString.add(item);
                     } else {
-//                        Note apple = new Note(index, item, R.drawable.notice_pic);
                         mList.add(item);
                         index++;
                     }
@@ -71,7 +63,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
             }
             socket.close();
         } catch (Exception e){
-//            Log.d("helloerrout22", e.getMessage());
             if (e.getMessage().equals("Read timed out")) {
                 return 8;
             }
@@ -79,7 +70,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
         //textView.setVisibility(View.GONE);
         return 0;
     }
-
 
 
 
@@ -91,7 +81,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
      * 构造函数
      */
     public WidgetViewsFactory(Context context, Intent intent) {
-
         mContext = context;
     }
 
@@ -101,7 +90,6 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
      */
     @Override
     public void onCreate() {
-        // 需要显示的数据
         mList.add("");
         initLists();
     }
@@ -136,20 +124,25 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
      */
     @Override
     public RemoteViews getViewAt(int position) {
+        // Notice: position starts from 0
         if (position < 0 || position >= mList.size())
             return null;
         String content = mList.get(position);
+
         // 创建在当前索引位置要显示的View
         final RemoteViews rv = new RemoteViews(mContext.getPackageName(),
-                R.layout.my_widget_layout_item);
+                R.layout.widget_list_item);
 
         // 设置要显示的内容
         rv.setTextViewText(R.id.widget_list_item_tv, content);
 
         // 填充Intent，填充在AppWdigetProvider中创建的PendingIntent
         Intent intent = new Intent();
+
         // 传入点击行的数据
         intent.putExtra("content", content);
+        intent.putExtra("position", Integer.toString(position));
+        intent.putExtra("url", urlString.get(position));
         rv.setOnClickFillInIntent(R.id.widget_list_item_tv, intent);
 
         return rv;
