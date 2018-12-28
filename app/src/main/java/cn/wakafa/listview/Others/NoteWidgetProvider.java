@@ -12,6 +12,7 @@ import android.os.Build;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
+import cn.wakafa.listview.Activity.MainActivity;
 import cn.wakafa.listview.Activity.WebViewActivity;
 import cn.wakafa.listview.R;
 import cn.wakafa.listview.Service.WidgetViewsService;
@@ -23,7 +24,6 @@ import cn.wakafa.listview.Service.WidgetViewsService;
 @TargetApi(Build.VERSION_CODES.CUPCAKE)
 public class NoteWidgetProvider extends AppWidgetProvider {
 
-    String clickAction = "click";
     int i = 0;
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -73,6 +73,20 @@ public class NoteWidgetProvider extends AppWidgetProvider {
                 context, 0, refreshIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.button_refresh,
                 refreshPendingIntent);
+
+        // 打开主程序按钮
+        final Intent mainIntent = new Intent(context,
+                MainActivity.class);
+        final PendingIntent mainPendingIntent = PendingIntent.getActivity(context, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.widget_logo, mainPendingIntent);
+
+        // 更新列表
+        final AppWidgetManager mgr = AppWidgetManager.getInstance(context);
+        final ComponentName cn = new ComponentName(context, NoteWidgetProvider.class);
+        // 这句话会调用RemoteViewSerivce中RemoteViewsFactory的onDataSetChanged()方法，即更新列表。
+        mgr.notifyAppWidgetViewDataChanged(mgr.getAppWidgetIds(cn),
+                R.id.widget_list);
+
 
         // 更新Wdiget
         appWidgetManager.updateAppWidget(thisWidget, remoteViews);

@@ -127,6 +127,8 @@ public class WidgetViewsFactory implements RemoteViewsService.RemoteViewsFactory
         // Notice: position starts from 0
         if (position < 0 || position >= mList.size())
             return null;
+        if (position < 0 || position >= urlString.size())
+            return null;
         String content = mList.get(position);
 
         // 创建在当前索引位置要显示的View
